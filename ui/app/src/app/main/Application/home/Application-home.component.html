@@ -1,0 +1,51 @@
+<o-form-layout-manager attr="Application" mode="tab" title="APPLICATION">
+    <div fxFill fxLayout="column" fxLayoutAlign="start">
+        <o-table 
+            attr="ApplicationTable" 
+            service="Application" 
+            entity="Application" 
+            title="APPLICATION"
+            keys="application_id"
+            columns="application_id;applicant_id;position_id;application_date" 
+            header-actions="R;D"
+            visible-columns="application_id;applicant_id;position_id;application_date"  
+            sort-columns="application_id" 
+            query-rows="20" 
+            quick-filter="yes"
+            row-height="medium" 
+            select-all-checkbox="true" 
+            pageable="yes"  
+            auto-adjust="true" 
+            virtual-scroll="yes" 
+            edition-mode="dblclick"
+            horizontal-scroll="yes"
+            show-title="yes"
+            export-button="yes">
+            
+            <o-table-column #application_id attr="application_id" title=" application_id*" type="integer" editable="no" required="no" content-align="center"></o-table-column>
+            
+            <o-table-column attr="applicant_id" title="applicant_id">
+    <o-table-cell-renderer-service attr="applicant_id" 
+        service="Applicant" entity="ApplicantType" columns="applicant_id;first_name"
+        parent-keys="application_id:applicant_id"
+        value-column="first_name" keys="applicant_id"
+        visible-columns="first_name" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+            
+            <o-table-column attr="position_id" title="position_id">
+    <o-table-cell-renderer-service attr="position_id" 
+        service="Position" entity="PositionType" columns="position_id;description"
+        parent-keys="application_id:position_id"
+        value-column="description" keys="position_id"
+        visible-columns="description" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+            
+            <o-date-input #application_date attr="application_date" type="timestamp" label="application_date" editable="no" required="yes" format="LL" fxFlex="20%" class="form-field"></o-date-input>
+            
+            <o-table-context-menu></o-table-context-menu>
+            <o-table-paginator page-size-options="24;48;96"></o-table-paginator>
+        </o-table>
+    </div>
+</o-form-layout-manager>

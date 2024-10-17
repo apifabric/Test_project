@@ -1,0 +1,49 @@
+<o-form-layout-manager attr="PositionSkill" mode="tab" title="POSITIONSKILL">
+    <div fxFill fxLayout="column" fxLayoutAlign="start">
+        <o-table 
+            attr="PositionSkillTable" 
+            service="PositionSkill" 
+            entity="PositionSkill" 
+            title="POSITIONSKILL"
+            keys="position_skill_id"
+            columns="position_skill_id;position_id;skill_id" 
+            header-actions="R;D"
+            visible-columns="position_skill_id;position_id;skill_id"  
+            sort-columns="position_skill_id" 
+            query-rows="20" 
+            quick-filter="yes"
+            row-height="medium" 
+            select-all-checkbox="true" 
+            pageable="yes"  
+            auto-adjust="true" 
+            virtual-scroll="yes" 
+            edition-mode="dblclick"
+            horizontal-scroll="yes"
+            show-title="yes"
+            export-button="yes">
+            
+            <o-table-column #position_skill_id attr="position_skill_id" title=" position_skill_id*" type="integer" editable="no" required="no" content-align="center"></o-table-column>
+            
+            <o-table-column attr="position_id" title="position_id">
+    <o-table-cell-renderer-service attr="position_id" 
+        service="Position" entity="PositionType" columns="position_id;description"
+        parent-keys="position_skill_id:position_id"
+        value-column="description" keys="position_id"
+        visible-columns="description" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+            
+            <o-table-column attr="skill_id" title="skill_id">
+    <o-table-cell-renderer-service attr="skill_id" 
+        service="Skill" entity="SkillType" columns="skill_id;name"
+        parent-keys="position_skill_id:skill_id"
+        value-column="name" keys="skill_id"
+        visible-columns="name" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+            
+            <o-table-context-menu></o-table-context-menu>
+            <o-table-paginator page-size-options="24;48;96"></o-table-paginator>
+        </o-table>
+    </div>
+</o-form-layout-manager>

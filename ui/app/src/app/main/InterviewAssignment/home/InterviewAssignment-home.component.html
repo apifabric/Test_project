@@ -1,0 +1,49 @@
+<o-form-layout-manager attr="InterviewAssignment" mode="tab" title="INTERVIEWASSIGNMENT">
+    <div fxFill fxLayout="column" fxLayoutAlign="start">
+        <o-table 
+            attr="InterviewAssignmentTable" 
+            service="InterviewAssignment" 
+            entity="InterviewAssignment" 
+            title="INTERVIEWASSIGNMENT"
+            keys="assignment_id"
+            columns="assignment_id;interview_id;interviewer_id" 
+            header-actions="R;D"
+            visible-columns="assignment_id;interview_id;interviewer_id"  
+            sort-columns="assignment_id" 
+            query-rows="20" 
+            quick-filter="yes"
+            row-height="medium" 
+            select-all-checkbox="true" 
+            pageable="yes"  
+            auto-adjust="true" 
+            virtual-scroll="yes" 
+            edition-mode="dblclick"
+            horizontal-scroll="yes"
+            show-title="yes"
+            export-button="yes">
+            
+            <o-table-column #assignment_id attr="assignment_id" title=" assignment_id*" type="integer" editable="no" required="no" content-align="center"></o-table-column>
+            
+            <o-table-column attr="interview_id" title="interview_id">
+    <o-table-cell-renderer-service attr="interview_id" 
+        service="Interview" entity="InterviewType" columns="interview_id;interview_id"
+        parent-keys="assignment_id:interview_id"
+        value-column="interview_id" keys="interview_id"
+        visible-columns="interview_id" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+            
+            <o-table-column attr="interviewer_id" title="interviewer_id">
+    <o-table-cell-renderer-service attr="interviewer_id" 
+        service="Interviewer" entity="InterviewerType" columns="interviewer_id;name"
+        parent-keys="assignment_id:interviewer_id"
+        value-column="name" keys="interviewer_id"
+        visible-columns="name" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+            
+            <o-table-context-menu></o-table-context-menu>
+            <o-table-paginator page-size-options="24;48;96"></o-table-paginator>
+        </o-table>
+    </div>
+</o-form-layout-manager>

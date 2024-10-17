@@ -1,0 +1,363 @@
+about:
+  date: October 17, 2024 21:22:25
+  recent_changes: works with modified safrs-react-admin
+  version: 0.0.0
+api_root: '{http_type}://{swagger_host}:{port}/{api}'
+authentication: '{system-default}'
+info:
+  number_relationships: 13
+  number_tables: 12
+info_toggle_checked: true
+resources:
+  Applicant:
+    attributes:
+    - label: ' first_name*'
+      name: first_name
+      required: true
+      search: true
+      sort: true
+    - name: last_name
+      required: true
+    - name: email
+      required: true
+    - name: phone_number
+    - name: applicant_id
+    description: Stores applicant personal details.
+    info_list: Stores applicant personal details.
+    tab_groups:
+    - direction: tomany
+      fks:
+      - applicant_id
+      name: ApplicantSkillList
+      resource: ApplicantSkill
+    - direction: tomany
+      fks:
+      - applicant_id
+      name: ApplicationList
+      resource: Application
+    type: Applicant
+    user_key: first_name
+  ApplicantSkill:
+    attributes:
+    - label: ' applicant_skill_id*'
+      name: applicant_skill_id
+      search: true
+      sort: true
+    - name: applicant_id
+      required: true
+    - name: skill_id
+      required: true
+    description: Tracks skills associated with applicants.
+    info_list: Tracks skills associated with applicants.
+    tab_groups:
+    - direction: toone
+      fks:
+      - applicant_id
+      name: applicant
+      resource: Applicant
+    - direction: toone
+      fks:
+      - skill_id
+      name: skill
+      resource: Skill
+    type: ApplicantSkill
+    user_key: applicant_skill_id
+  Application:
+    attributes:
+    - label: ' application_id*'
+      name: application_id
+      search: true
+      sort: true
+    - name: applicant_id
+      required: true
+    - name: position_id
+      required: true
+    - name: application_date
+      required: true
+    description: Links applicants to the positions they applied for.
+    info_list: Links applicants to the positions they applied for.
+    tab_groups:
+    - direction: tomany
+      fks:
+      - application_id
+      name: DocumentList
+      resource: Document
+    - direction: tomany
+      fks:
+      - application_id
+      name: InterviewList
+      resource: Interview
+    - direction: tomany
+      fks:
+      - application_id
+      name: OfferList
+      resource: Offer
+    - direction: tomany
+      fks:
+      - application_id
+      name: ReviewList
+      resource: Review
+    - direction: toone
+      fks:
+      - applicant_id
+      name: applicant
+      resource: Applicant
+    - direction: toone
+      fks:
+      - position_id
+      name: position
+      resource: Position
+    type: Application
+    user_key: application_id
+  Document:
+    attributes:
+    - label: ' document_id*'
+      name: document_id
+      search: true
+      sort: true
+    - name: application_id
+      required: true
+    - name: document_type
+      required: true
+    - name: file_path
+      required: true
+    description: Stores documents/submission files for applications.
+    info_list: Stores documents/submission files for applications.
+    tab_groups:
+    - direction: toone
+      fks:
+      - application_id
+      name: application
+      resource: Application
+    type: Document
+    user_key: document_id
+  Interview:
+    attributes:
+    - label: ' interview_id*'
+      name: interview_id
+      search: true
+      sort: true
+    - name: application_id
+      required: true
+    - name: scheduled_date
+      required: true
+    - name: status
+      required: true
+    description: Stores details of interviews scheduled for applications.
+    info_list: Stores details of interviews scheduled for applications.
+    tab_groups:
+    - direction: tomany
+      fks:
+      - interview_id
+      name: InterviewAssignmentList
+      resource: InterviewAssignment
+    - direction: toone
+      fks:
+      - application_id
+      name: application
+      resource: Application
+    type: Interview
+    user_key: interview_id
+  InterviewAssignment:
+    attributes:
+    - label: ' assignment_id*'
+      name: assignment_id
+      search: true
+      sort: true
+    - name: interview_id
+      required: true
+    - name: interviewer_id
+      required: true
+    description: Links interviewers to interviews they are assigned to.
+    info_list: Links interviewers to interviews they are assigned to.
+    tab_groups:
+    - direction: toone
+      fks:
+      - interview_id
+      name: interview
+      resource: Interview
+    - direction: toone
+      fks:
+      - interviewer_id
+      name: interviewer
+      resource: Interviewer
+    type: InterviewAssignment
+    user_key: assignment_id
+  Interviewer:
+    attributes:
+    - label: ' name*'
+      name: name
+      required: true
+      search: true
+      sort: true
+    - name: department
+      required: true
+    - name: interviewer_id
+    description: Contains information about interviewers.
+    info_list: Contains information about interviewers.
+    tab_groups:
+    - direction: tomany
+      fks:
+      - interviewer_id
+      name: InterviewAssignmentList
+      resource: InterviewAssignment
+    - direction: tomany
+      fks:
+      - interviewer_id
+      name: ReviewList
+      resource: Review
+    type: Interviewer
+    user_key: name
+  Offer:
+    attributes:
+    - label: ' offer_id*'
+      name: offer_id
+      search: true
+      sort: true
+    - name: application_id
+      required: true
+    - name: offered_date
+      required: true
+    - name: accepted
+    description: Represents job offers extended to applicants.
+    info_list: Represents job offers extended to applicants.
+    tab_groups:
+    - direction: toone
+      fks:
+      - application_id
+      name: application
+      resource: Application
+    type: Offer
+    user_key: offer_id
+  Position:
+    attributes:
+    - label: ' description*'
+      name: description
+      search: true
+      sort: true
+    - name: title
+      required: true
+    - name: department
+      required: true
+    - name: position_id
+    description: Represents available positions for applicants.
+    info_list: Represents available positions for applicants.
+    tab_groups:
+    - direction: tomany
+      fks:
+      - position_id
+      name: ApplicationList
+      resource: Application
+    - direction: tomany
+      fks:
+      - position_id
+      name: PositionSkillList
+      resource: PositionSkill
+    type: Position
+    user_key: description
+  PositionSkill:
+    attributes:
+    - label: ' position_skill_id*'
+      name: position_skill_id
+      search: true
+      sort: true
+    - name: position_id
+      required: true
+    - name: skill_id
+      required: true
+    description: Junction table linking positions to required skills.
+    info_list: Junction table linking positions to required skills.
+    tab_groups:
+    - direction: toone
+      fks:
+      - position_id
+      name: position
+      resource: Position
+    - direction: toone
+      fks:
+      - skill_id
+      name: skill
+      resource: Skill
+    type: PositionSkill
+    user_key: position_skill_id
+  Review:
+    attributes:
+    - label: ' review_id*'
+      name: review_id
+      search: true
+      sort: true
+    - name: application_id
+      required: true
+    - name: interviewer_id
+      required: true
+    - name: score
+      required: true
+    - name: comments
+    description: Records reviews given by interviewers for applications post-interview.
+    info_list: Records reviews given by interviewers for applications post-interview.
+    tab_groups:
+    - direction: toone
+      fks:
+      - application_id
+      name: application
+      resource: Application
+    - direction: toone
+      fks:
+      - interviewer_id
+      name: interviewer
+      resource: Interviewer
+    type: Review
+    user_key: review_id
+  Skill:
+    attributes:
+    - label: ' name*'
+      name: name
+      required: true
+      search: true
+      sort: true
+    - name: skill_id
+    description: Represents skills required for positions.
+    info_list: Represents skills required for positions.
+    tab_groups:
+    - direction: tomany
+      fks:
+      - skill_id
+      name: ApplicantSkillList
+      resource: ApplicantSkill
+    - direction: tomany
+      fks:
+      - skill_id
+      name: PositionSkillList
+      resource: PositionSkill
+    type: Skill
+    user_key: name
+settings:
+  HomeJS: /admin-app/home.js
+  max_list_columns: 8
+  style_guide:
+    applicationLocales:
+    - en
+    - es
+    currency_symbol: $
+    currency_symbol_position: left
+    date_format: LL
+    decimal_max: '1000000000'
+    decimal_min: '0'
+    decimal_separator: .
+    detail_mode: tab
+    edit_on_mode: dblclick
+    include_translation: 'false'
+    keycloak_client_id: alsclient
+    keycloak_realm: kcals
+    keycloak_url: http://localhost:8080
+    locale: en
+    max_decimal_digits: '4'
+    min_decimal_digits: '2'
+    new_mode: dialog
+    pick_style: list
+    row_height: small,
+    serviceType: OntimizeEE
+    startSessionPath: /auth/login
+    style: light
+    thousand_separator: ','
+    use_keycloak: 'false'

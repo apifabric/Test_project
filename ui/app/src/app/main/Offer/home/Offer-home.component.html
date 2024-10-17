@@ -1,0 +1,44 @@
+<o-form-layout-manager attr="Offer" mode="tab" title="OFFER">
+    <div fxFill fxLayout="column" fxLayoutAlign="start">
+        <o-table 
+            attr="OfferTable" 
+            service="Offer" 
+            entity="Offer" 
+            title="OFFER"
+            keys="offer_id"
+            columns="offer_id;application_id;offered_date;accepted" 
+            header-actions="R;D"
+            visible-columns="offer_id;application_id;offered_date;accepted"  
+            sort-columns="offer_id" 
+            query-rows="20" 
+            quick-filter="yes"
+            row-height="medium" 
+            select-all-checkbox="true" 
+            pageable="yes"  
+            auto-adjust="true" 
+            virtual-scroll="yes" 
+            edition-mode="dblclick"
+            horizontal-scroll="yes"
+            show-title="yes"
+            export-button="yes">
+            
+            <o-table-column #offer_id attr="offer_id" title=" offer_id*" type="integer" editable="no" required="no" content-align="center"></o-table-column>
+            
+            <o-table-column attr="application_id" title="application_id">
+    <o-table-cell-renderer-service attr="application_id" 
+        service="Application" entity="ApplicationType" columns="application_id;application_id"
+        parent-keys="offer_id:application_id"
+        value-column="application_id" keys="application_id"
+        visible-columns="application_id" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+            
+            <o-date-input #offered_date attr="offered_date" type="timestamp" label="offered_date" editable="no" required="yes" format="LL" fxFlex="20%" class="form-field"></o-date-input>
+            
+            <o-table-column #accepted attr="accepted" title="accepted" editable="no" required="no" content-align="left"></o-table-column>
+            
+            <o-table-context-menu></o-table-context-menu>
+            <o-table-paginator page-size-options="24;48;96"></o-table-paginator>
+        </o-table>
+    </div>
+</o-form-layout-manager>

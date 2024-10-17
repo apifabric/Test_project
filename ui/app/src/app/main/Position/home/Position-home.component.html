@@ -1,0 +1,37 @@
+<o-form-layout-manager attr="Position" mode="tab" title="POSITION">
+    <div fxFill fxLayout="column" fxLayoutAlign="start">
+        <o-table 
+            attr="PositionTable" 
+            service="Position" 
+            entity="Position" 
+            title="POSITION"
+            keys="position_id"
+            columns="description;title;department;position_id" 
+            header-actions="R;D"
+            visible-columns="description;title;department;position_id"  
+            sort-columns="description" 
+            query-rows="20" 
+            quick-filter="yes"
+            row-height="medium" 
+            select-all-checkbox="true" 
+            pageable="yes"  
+            auto-adjust="true" 
+            virtual-scroll="yes" 
+            edition-mode="dblclick"
+            horizontal-scroll="yes"
+            show-title="yes"
+            export-button="yes">
+            
+            <o-table-column #description attr="description" title=" description*" editable="no" required="no" content-align="left"></o-table-column>
+            
+            <o-table-column #title attr="title" title="title" editable="no" required="yes" content-align="left"></o-table-column>
+            
+            <o-table-column #department attr="department" title="department" editable="no" required="yes" content-align="left"></o-table-column>
+            
+            <o-table-column #position_id attr="position_id" title="position_id" type="integer" editable="no" required="no" content-align="center"></o-table-column>
+            
+            <o-table-context-menu></o-table-context-menu>
+            <o-table-paginator page-size-options="24;48;96"></o-table-paginator>
+        </o-table>
+    </div>
+</o-form-layout-manager>

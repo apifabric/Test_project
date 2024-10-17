@@ -1,0 +1,529 @@
+about:
+  date: October 17, 2024 21:22:25
+  recent_changes: works with modified safrs-react-admin
+  version: 0.0.0
+api_root: '{http_type}://{swagger_host}:{port}/{api}'
+authentication: '{system-default}'
+entities:
+  Applicant:
+    columns:
+    - label: ' first_name*'
+      name: first_name
+      required: true
+      search: true
+      sort: true
+      template: text
+      type: VARCHAR
+    - name: last_name
+      required: true
+      template: text
+      type: VARCHAR
+    - name: email
+      required: true
+      template: text
+      type: VARCHAR
+    - name: phone_number
+      template: text
+      type: VARCHAR
+    - name: applicant_id
+      template: integer
+      type: INTEGER
+    description: Stores applicant personal details.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: first_name
+    home_template: home_template.html
+    info_list: Stores applicant personal details.
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - applicant_id
+    tab_groups:
+    - direction: tomany
+      fks:
+      - applicant_id
+      name: ApplicantSkillList
+      resource: ApplicantSkill
+    - direction: tomany
+      fks:
+      - applicant_id
+      name: ApplicationList
+      resource: Application
+    type: Applicant
+  ApplicantSkill:
+    columns:
+    - label: ' applicant_skill_id*'
+      name: applicant_skill_id
+      search: true
+      sort: true
+      template: integer
+      type: INTEGER
+    - name: applicant_id
+      required: true
+      template: integer
+      type: INTEGER
+    - name: skill_id
+      required: true
+      template: integer
+      type: INTEGER
+    description: Tracks skills associated with applicants.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: applicant_skill_id
+    home_template: home_template.html
+    info_list: Tracks skills associated with applicants.
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - applicant_skill_id
+    tab_groups:
+    - direction: toone
+      fks:
+      - applicant_id
+      name: applicant
+      resource: Applicant
+    - direction: toone
+      fks:
+      - skill_id
+      name: skill
+      resource: Skill
+    type: ApplicantSkill
+  Application:
+    columns:
+    - label: ' application_id*'
+      name: application_id
+      search: true
+      sort: true
+      template: integer
+      type: INTEGER
+    - name: applicant_id
+      required: true
+      template: integer
+      type: INTEGER
+    - name: position_id
+      required: true
+      template: integer
+      type: INTEGER
+    - name: application_date
+      required: true
+      template: date
+      type: DATETIME
+    description: Links applicants to the positions they applied for.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: application_id
+    home_template: home_template.html
+    info_list: Links applicants to the positions they applied for.
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - application_id
+    tab_groups:
+    - direction: tomany
+      fks:
+      - application_id
+      name: DocumentList
+      resource: Document
+    - direction: tomany
+      fks:
+      - application_id
+      name: InterviewList
+      resource: Interview
+    - direction: tomany
+      fks:
+      - application_id
+      name: OfferList
+      resource: Offer
+    - direction: tomany
+      fks:
+      - application_id
+      name: ReviewList
+      resource: Review
+    - direction: toone
+      fks:
+      - applicant_id
+      name: applicant
+      resource: Applicant
+    - direction: toone
+      fks:
+      - position_id
+      name: position
+      resource: Position
+    type: Application
+  Document:
+    columns:
+    - label: ' document_id*'
+      name: document_id
+      search: true
+      sort: true
+      template: integer
+      type: INTEGER
+    - name: application_id
+      required: true
+      template: integer
+      type: INTEGER
+    - name: document_type
+      required: true
+      template: text
+      type: VARCHAR
+    - name: file_path
+      required: true
+      template: text
+      type: VARCHAR
+    description: Stores documents/submission files for applications.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: document_id
+    home_template: home_template.html
+    info_list: Stores documents/submission files for applications.
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - document_id
+    tab_groups:
+    - direction: toone
+      fks:
+      - application_id
+      name: application
+      resource: Application
+    type: Document
+  Interview:
+    columns:
+    - label: ' interview_id*'
+      name: interview_id
+      search: true
+      sort: true
+      template: integer
+      type: INTEGER
+    - name: application_id
+      required: true
+      template: integer
+      type: INTEGER
+    - name: scheduled_date
+      required: true
+      template: date
+      type: DATETIME
+    - name: status
+      required: true
+      template: text
+      type: VARCHAR
+    description: Stores details of interviews scheduled for applications.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: interview_id
+    home_template: home_template.html
+    info_list: Stores details of interviews scheduled for applications.
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - interview_id
+    tab_groups:
+    - direction: tomany
+      fks:
+      - interview_id
+      name: InterviewAssignmentList
+      resource: InterviewAssignment
+    - direction: toone
+      fks:
+      - application_id
+      name: application
+      resource: Application
+    type: Interview
+  InterviewAssignment:
+    columns:
+    - label: ' assignment_id*'
+      name: assignment_id
+      search: true
+      sort: true
+      template: integer
+      type: INTEGER
+    - name: interview_id
+      required: true
+      template: integer
+      type: INTEGER
+    - name: interviewer_id
+      required: true
+      template: integer
+      type: INTEGER
+    description: Links interviewers to interviews they are assigned to.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: assignment_id
+    home_template: home_template.html
+    info_list: Links interviewers to interviews they are assigned to.
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - assignment_id
+    tab_groups:
+    - direction: toone
+      fks:
+      - interview_id
+      name: interview
+      resource: Interview
+    - direction: toone
+      fks:
+      - interviewer_id
+      name: interviewer
+      resource: Interviewer
+    type: InterviewAssignment
+  Interviewer:
+    columns:
+    - label: ' name*'
+      name: name
+      required: true
+      search: true
+      sort: true
+      template: text
+      type: VARCHAR
+    - name: department
+      required: true
+      template: text
+      type: VARCHAR
+    - name: interviewer_id
+      template: integer
+      type: INTEGER
+    description: Contains information about interviewers.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: name
+    home_template: home_template.html
+    info_list: Contains information about interviewers.
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - interviewer_id
+    tab_groups:
+    - direction: tomany
+      fks:
+      - interviewer_id
+      name: InterviewAssignmentList
+      resource: InterviewAssignment
+    - direction: tomany
+      fks:
+      - interviewer_id
+      name: ReviewList
+      resource: Review
+    type: Interviewer
+  Offer:
+    columns:
+    - label: ' offer_id*'
+      name: offer_id
+      search: true
+      sort: true
+      template: integer
+      type: INTEGER
+    - name: application_id
+      required: true
+      template: integer
+      type: INTEGER
+    - name: offered_date
+      required: true
+      template: date
+      type: DATETIME
+    - name: accepted
+      template: text
+      type: VARCHAR
+    description: Represents job offers extended to applicants.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: offer_id
+    home_template: home_template.html
+    info_list: Represents job offers extended to applicants.
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - offer_id
+    tab_groups:
+    - direction: toone
+      fks:
+      - application_id
+      name: application
+      resource: Application
+    type: Offer
+  Position:
+    columns:
+    - label: ' description*'
+      name: description
+      search: true
+      sort: true
+      template: text
+      type: VARCHAR
+    - name: title
+      required: true
+      template: text
+      type: VARCHAR
+    - name: department
+      required: true
+      template: text
+      type: VARCHAR
+    - name: position_id
+      template: integer
+      type: INTEGER
+    description: Represents available positions for applicants.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: description
+    home_template: home_template.html
+    info_list: Represents available positions for applicants.
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - position_id
+    tab_groups:
+    - direction: tomany
+      fks:
+      - position_id
+      name: ApplicationList
+      resource: Application
+    - direction: tomany
+      fks:
+      - position_id
+      name: PositionSkillList
+      resource: PositionSkill
+    type: Position
+  PositionSkill:
+    columns:
+    - label: ' position_skill_id*'
+      name: position_skill_id
+      search: true
+      sort: true
+      template: integer
+      type: INTEGER
+    - name: position_id
+      required: true
+      template: integer
+      type: INTEGER
+    - name: skill_id
+      required: true
+      template: integer
+      type: INTEGER
+    description: Junction table linking positions to required skills.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: position_skill_id
+    home_template: home_template.html
+    info_list: Junction table linking positions to required skills.
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - position_skill_id
+    tab_groups:
+    - direction: toone
+      fks:
+      - position_id
+      name: position
+      resource: Position
+    - direction: toone
+      fks:
+      - skill_id
+      name: skill
+      resource: Skill
+    type: PositionSkill
+  Review:
+    columns:
+    - label: ' review_id*'
+      name: review_id
+      search: true
+      sort: true
+      template: integer
+      type: INTEGER
+    - name: application_id
+      required: true
+      template: integer
+      type: INTEGER
+    - name: interviewer_id
+      required: true
+      template: integer
+      type: INTEGER
+    - name: score
+      required: true
+      template: integer
+      type: INTEGER
+    - name: comments
+      template: text
+      type: VARCHAR
+    description: Records reviews given by interviewers for applications post-interview.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: review_id
+    home_template: home_template.html
+    info_list: Records reviews given by interviewers for applications post-interview.
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - review_id
+    tab_groups:
+    - direction: toone
+      fks:
+      - application_id
+      name: application
+      resource: Application
+    - direction: toone
+      fks:
+      - interviewer_id
+      name: interviewer
+      resource: Interviewer
+    type: Review
+  Skill:
+    columns:
+    - label: ' name*'
+      name: name
+      required: true
+      search: true
+      sort: true
+      template: text
+      type: VARCHAR
+    - name: skill_id
+      template: integer
+      type: INTEGER
+    description: Represents skills required for positions.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: name
+    home_template: home_template.html
+    info_list: Represents skills required for positions.
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - skill_id
+    tab_groups:
+    - direction: tomany
+      fks:
+      - skill_id
+      name: ApplicantSkillList
+      resource: ApplicantSkill
+    - direction: tomany
+      fks:
+      - skill_id
+      name: PositionSkillList
+      resource: PositionSkill
+    type: Skill
+settings:
+  HomeJS: /admin-app/home.js
+  max_list_columns: 8
+  style_guide:
+    applicationLocales:
+    - en
+    - es
+    currency_symbol: $
+    currency_symbol_position: left
+    date_format: LL
+    decimal_max: '1000000000'
+    decimal_min: '0'
+    decimal_separator: .
+    edit_on_mode: dblclick
+    include_translation: false
+    keycloak_client_id: alsclient
+    keycloak_realm: kcals
+    keycloak_url: http://localhost:8080
+    locale: en
+    max_decimal_digits: '4'
+    min_decimal_digits: '2'
+    mode: tab
+    pick_style: list
+    serviceType: OntimizeEE
+    startSessionPath: /auth/login
+    style: light
+    thousand_separator: ','
+    use_keycloak: false

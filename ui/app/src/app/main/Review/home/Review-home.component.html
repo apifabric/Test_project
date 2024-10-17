@@ -1,0 +1,53 @@
+<o-form-layout-manager attr="Review" mode="tab" title="REVIEW">
+    <div fxFill fxLayout="column" fxLayoutAlign="start">
+        <o-table 
+            attr="ReviewTable" 
+            service="Review" 
+            entity="Review" 
+            title="REVIEW"
+            keys="review_id"
+            columns="review_id;application_id;interviewer_id;score;comments" 
+            header-actions="R;D"
+            visible-columns="review_id;application_id;interviewer_id;score;comments"  
+            sort-columns="review_id" 
+            query-rows="20" 
+            quick-filter="yes"
+            row-height="medium" 
+            select-all-checkbox="true" 
+            pageable="yes"  
+            auto-adjust="true" 
+            virtual-scroll="yes" 
+            edition-mode="dblclick"
+            horizontal-scroll="yes"
+            show-title="yes"
+            export-button="yes">
+            
+            <o-table-column #review_id attr="review_id" title=" review_id*" type="integer" editable="no" required="no" content-align="center"></o-table-column>
+            
+            <o-table-column attr="application_id" title="application_id">
+    <o-table-cell-renderer-service attr="application_id" 
+        service="Application" entity="ApplicationType" columns="application_id;application_id"
+        parent-keys="review_id:application_id"
+        value-column="application_id" keys="application_id"
+        visible-columns="application_id" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+            
+            <o-table-column attr="interviewer_id" title="interviewer_id">
+    <o-table-cell-renderer-service attr="interviewer_id" 
+        service="Interviewer" entity="InterviewerType" columns="interviewer_id;name"
+        parent-keys="review_id:interviewer_id"
+        value-column="name" keys="interviewer_id"
+        visible-columns="name" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+            
+            <o-table-column #score attr="score" title="score" type="integer" editable="no" required="yes" content-align="center"></o-table-column>
+            
+            <o-table-column #comments attr="comments" title="comments" editable="no" required="no" content-align="left"></o-table-column>
+            
+            <o-table-context-menu></o-table-context-menu>
+            <o-table-paginator page-size-options="24;48;96"></o-table-paginator>
+        </o-table>
+    </div>
+</o-form-layout-manager>

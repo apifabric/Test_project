@@ -1,0 +1,99 @@
+// Copy this text, paste to https://dbdiagram.io/d
+// Or, https://databasediagram.com/app
+
+Table Applicant {
+    applicant_id INTEGER [primary key]
+    first_name VARCHAR 
+    last_name VARCHAR 
+    email VARCHAR 
+    phone_number VARCHAR 
+    }
+
+Table ApplicantSkill {
+    applicant_skill_id INTEGER [primary key]
+    applicant_id INTEGER 
+    skill_id INTEGER 
+    }
+
+Table Skill {
+    skill_id INTEGER [primary key]
+    name VARCHAR 
+    }
+
+Table Application {
+    application_id INTEGER [primary key]
+    applicant_id INTEGER 
+    position_id INTEGER 
+    application_date DATETIME 
+    }
+
+Table Position {
+    position_id INTEGER [primary key]
+    title VARCHAR 
+    department VARCHAR 
+    description VARCHAR 
+    }
+
+Table Document {
+    document_id INTEGER [primary key]
+    application_id INTEGER 
+    document_type VARCHAR 
+    file_path VARCHAR 
+    }
+
+Table Interview {
+    interview_id INTEGER [primary key]
+    application_id INTEGER 
+    scheduled_date DATETIME 
+    status VARCHAR 
+    }
+
+Table InterviewAssignment {
+    assignment_id INTEGER [primary key]
+    interview_id INTEGER 
+    interviewer_id INTEGER 
+    }
+
+Table Interviewer {
+    interviewer_id INTEGER [primary key]
+    name VARCHAR 
+    department VARCHAR 
+    }
+
+Table Offer {
+    offer_id INTEGER [primary key]
+    application_id INTEGER 
+    offered_date DATETIME 
+    accepted VARCHAR 
+    }
+
+Table PositionSkill {
+    position_skill_id INTEGER [primary key]
+    position_id INTEGER 
+    skill_id INTEGER 
+    }
+
+Table Review {
+    review_id INTEGER [primary key]
+    application_id INTEGER 
+    interviewer_id INTEGER 
+    score INTEGER 
+    comments VARCHAR 
+    }
+
+
+
+// Relationships
+    Ref: ApplicantSkill.(applicant_id) < Applicant.(applicant_id)
+    Ref: ApplicantSkill.(skill_id) < Skill.(skill_id)
+    Ref: Application.(applicant_id) < Applicant.(applicant_id)
+    Ref: Application.(position_id) < Position.(position_id)
+    Ref: Document.(application_id) < Application.(application_id)
+    Ref: Interview.(application_id) < Application.(application_id)
+    Ref: InterviewAssignment.(interview_id) < Interview.(interview_id)
+    Ref: InterviewAssignment.(interviewer_id) < Interviewer.(interviewer_id)
+    Ref: Offer.(application_id) < Application.(application_id)
+    Ref: PositionSkill.(position_id) < Position.(position_id)
+    Ref: PositionSkill.(skill_id) < Skill.(skill_id)
+    Ref: Review.(application_id) < Application.(application_id)
+    Ref: Review.(interviewer_id) < Interviewer.(interviewer_id)

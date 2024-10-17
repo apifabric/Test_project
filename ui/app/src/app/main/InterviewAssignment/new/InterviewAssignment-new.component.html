@@ -1,0 +1,54 @@
+<o-form #InterviewAssignmentForm attr="InterviewAssignment_form_insert" service="InterviewAssignment" entity="InterviewAssignment" 
+keys="assignment_id" fxLayout="column" show-header="yes" header-actions="I"
+horizontal-scroll="yes"
+after-insert-mode="new" class="standalone-form-container" (onInsertMode)="onInsertMode()">
+
+<o-row attr="row1" layout-align="start stretch">
+  <div fxLayout="row wrap" fxLayoutAlign="start start" fxFlex fxLayoutGap="14px">
+    
+        <o-integer-input #assignment_id attr="assignment_id" label=" assignment_id*" type="integer" editable="no" required="no" ></o-integer-input>
+      
+        <o-list-picker 
+        attr="interview_id"
+        service="Interview" 
+        entity="InterviewType"
+        fxFlex="30" 
+        query-on-init="no" 
+        query-on-bind="yes" 
+        required="yes" 
+        enabled="yes" 
+        filter="yes"
+        value-column="interview_id" 
+        value-column-type="INTEGER"  
+        keys="interview_id" 
+        columns="interview_id;interview_id;interview_id" 
+        title="interview_id"
+        visible-columns="interview_id;interview_id" 
+        separator=" - " width="680px" class="form-field">
+</o-list-picker>
+      
+        <o-list-picker 
+        attr="interviewer_id"
+        service="Interviewer" 
+        entity="InterviewerType"
+        fxFlex="30" 
+        query-on-init="no" 
+        query-on-bind="yes" 
+        required="yes" 
+        enabled="yes" 
+        filter="yes"
+        value-column="interviewer_id" 
+        value-column-type="INTEGER"  
+        keys="interviewer_id" 
+        columns="interviewer_id;interviewer_id;name" 
+        title="interviewer_id"
+        visible-columns="interviewer_id;name" 
+        separator=" - " width="680px" class="form-field">
+</o-list-picker>
+      
+</div>
+</o-row>
+
+<div layout-padding></div>
+
+</o-form>

@@ -1,0 +1,54 @@
+<o-form #ApplicantSkillForm attr="ApplicantSkill_form_insert" service="ApplicantSkill" entity="ApplicantSkill" 
+keys="applicant_skill_id" fxLayout="column" show-header="yes" header-actions="I"
+horizontal-scroll="yes"
+after-insert-mode="new" class="standalone-form-container" (onInsertMode)="onInsertMode()">
+
+<o-row attr="row1" layout-align="start stretch">
+  <div fxLayout="row wrap" fxLayoutAlign="start start" fxFlex fxLayoutGap="14px">
+    
+        <o-integer-input #applicant_skill_id attr="applicant_skill_id" label=" applicant_skill_id*" type="integer" editable="no" required="no" ></o-integer-input>
+      
+        <o-list-picker 
+        attr="applicant_id"
+        service="Applicant" 
+        entity="ApplicantType"
+        fxFlex="30" 
+        query-on-init="no" 
+        query-on-bind="yes" 
+        required="yes" 
+        enabled="yes" 
+        filter="yes"
+        value-column="applicant_id" 
+        value-column-type="INTEGER"  
+        keys="applicant_id" 
+        columns="applicant_id;applicant_id;first_name" 
+        title="applicant_id"
+        visible-columns="applicant_id;first_name" 
+        separator=" - " width="680px" class="form-field">
+</o-list-picker>
+      
+        <o-list-picker 
+        attr="skill_id"
+        service="Skill" 
+        entity="SkillType"
+        fxFlex="30" 
+        query-on-init="no" 
+        query-on-bind="yes" 
+        required="yes" 
+        enabled="yes" 
+        filter="yes"
+        value-column="skill_id" 
+        value-column-type="INTEGER"  
+        keys="skill_id" 
+        columns="skill_id;skill_id;name" 
+        title="skill_id"
+        visible-columns="skill_id;name" 
+        separator=" - " width="680px" class="form-field">
+</o-list-picker>
+      
+</div>
+</o-row>
+
+<div layout-padding></div>
+
+</o-form>
